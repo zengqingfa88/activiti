@@ -24,9 +24,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UseController {
 
-    private static Logger logger = LoggerFactory.getLogger(UseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UseController.class);
 
-    // Activiti Identify Service
+    // Activiti Identify Service  关于人员信息
     private IdentityService identityService;
 
     /**
