@@ -78,7 +78,7 @@ public class ModelController {
             modelData.setMetaInfo(modelObjectNode.toString());
             modelData.setName(name);
             modelData.setKey(StringUtils.defaultString(key));
-
+            Model model = repositoryService.getModel(key);
             repositoryService.saveModel(modelData);
             repositoryService.addModelEditorSource(modelData.getId(), editorNode.toString().getBytes("utf-8"));
 

@@ -11,6 +11,7 @@ $(function() {
  * 打开办理对话框
  */
 function handle() {
+	debugger
 	var $ele = $(this);
 	
 	// 当前节点的英文名称

@@ -40,7 +40,6 @@
         <mockito.version>1.9.0</mockito.version>
         <powermock.version>1.4.12</powermock.version>
         <activiti.version>5.22.0</activiti.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -58,11 +57,29 @@
 
     <!-- 依赖项定义 -->
     <dependencies>
-
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.6</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.5.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.6.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.3.2</version>
         </dependency>
 
         <!-- activiti -->
@@ -246,7 +263,6 @@
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>1.0.1.Final</version>
         </dependency>
-
         <!-- spring data access -->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -259,6 +275,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.40</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -571,7 +601,7 @@
 
                 <!-- driver configs -->
                 <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-                <jdbc.url><![CDATA[jdbc:mysql://localhost:3306/activiti4?useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
+                <jdbc.url><![CDATA[jdbc:mysql://localhost:3306/activiti5?useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>root</jdbc.password>
                 <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>

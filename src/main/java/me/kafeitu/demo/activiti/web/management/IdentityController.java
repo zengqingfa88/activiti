@@ -179,6 +179,7 @@ public class IdentityController {
 
     /**
      * 为用户设置所属组
+     *
      * @param userId
      * @param groupIds
      * @return
@@ -201,5 +202,6 @@ public class IdentityController {
         }
         return "redirect:/management/identity/user/list";
     }
+
 
 }

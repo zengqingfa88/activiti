@@ -1,24 +1,9 @@
 package me.kafeitu.demo.activiti.web.form.dynamic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import me.kafeitu.demo.activiti.util.Page;
 import me.kafeitu.demo.activiti.util.PageUtil;
 import me.kafeitu.demo.activiti.util.UserUtil;
-import org.activiti.engine.FormService;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
@@ -42,6 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 动态表单Controller
@@ -121,9 +111,9 @@ public class DynamicFormController {
         StartFormDataImpl startFormData = (StartFormDataImpl) formService.getStartFormData(processDefinitionId);
         startFormData.setProcessDefinition(null);
 
-    /*
-     * 读取enum类型数据，用于下拉框
-     */
+        /*
+         * 读取enum类型数据，用于下拉框
+         */
         List<FormProperty> formProperties = startFormData.getFormProperties();
         for (FormProperty formProperty : formProperties) {
             Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
@@ -134,9 +124,7 @@ public class DynamicFormController {
                 result.put("enum_" + formProperty.getId(), values);
             }
         }
-
         result.put("form", startFormData);
-
         return result;
     }
 
@@ -154,9 +142,9 @@ public class DynamicFormController {
         taskFormData.setTask(null);
 
         result.put("taskFormData", taskFormData);
-    /*
-     * 读取enum类型数据，用于下拉框
-     */
+        /*
+         * 读取enum类型数据，用于下拉框
+         */
         List<FormProperty> formProperties = taskFormData.getFormProperties();
         for (FormProperty formProperty : formProperties) {
             Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
@@ -167,7 +155,6 @@ public class DynamicFormController {
                 result.put(formProperty.getId(), values);
             }
         }
-
         return result;
     }
 
@@ -179,7 +166,6 @@ public class DynamicFormController {
     public String completeTask(@PathVariable("taskId") String taskId, @RequestParam(value = "processType", required = false) String processType,
                                RedirectAttributes redirectAttributes, HttpServletRequest request) {
         Map<String, String> formProperties = new HashMap<String, String>();
-
         // 从request中读取参数然后转换
         Map<String, String[]> parameterMap = request.getParameterMap();
         Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
@@ -191,11 +177,8 @@ public class DynamicFormController {
                 formProperties.put(key.split("_")[1], entry.getValue()[0]);
             }
         }
-
         logger.debug("start form parameters: {}", formProperties);
-
         User user = UserUtil.getUserFromSession(request.getSession());
-
         // 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
         if (user == null || StringUtils.isBlank(user.getId())) {
             return "redirect:/login?timeout=true";
@@ -206,7 +189,6 @@ public class DynamicFormController {
         } finally {
             identityService.setAuthenticatedUserId(null);
         }
-
         redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
         return "redirect:/form/dynamic/task/list?processType=" + processType;
     }
@@ -221,7 +203,6 @@ public class DynamicFormController {
                                                          RedirectAttributes redirectAttributes,
                                                          HttpServletRequest request) {
         Map<String, String> formProperties = new HashMap<String, String>();
-
         // 从request中读取参数然后转换
         Map<String, String[]> parameterMap = request.getParameterMap();
         Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
@@ -233,9 +214,7 @@ public class DynamicFormController {
                 formProperties.put(key.split("_")[1], entry.getValue()[0]);
             }
         }
-
         logger.debug("start form parameters: {}", formProperties);
-
         User user = UserUtil.getUserFromSession(request.getSession());
         // 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
         if (user == null || StringUtils.isBlank(user.getId())) {
@@ -250,7 +229,6 @@ public class DynamicFormController {
             identityService.setAuthenticatedUserId(null);
         }
         redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
-
         return "redirect:/form/dynamic/process-list?processType=" + processType;
     }
 
@@ -273,13 +251,10 @@ public class DynamicFormController {
              * 这里为了演示区分开自定义表单的请假流程，值读取leave-dynamic-from
              * 在FormKeyController中有使用native方式查询的例子
              */
-
             List<Task> dynamicFormTasks = taskService.createTaskQuery().processDefinitionKey("leave-dynamic-from")
                     .taskCandidateOrAssigned(user.getId()).active().orderByTaskId().desc().list();
-
             List<Task> dispatchTasks = taskService.createTaskQuery().processDefinitionKey("dispatch")
                     .taskCandidateOrAssigned(user.getId()).active().orderByTaskId().desc().list();
-
             List<Task> leaveJpaTasks = taskService.createTaskQuery().processDefinitionKey("leave-jpa")
                     .taskCandidateOrAssigned(user.getId()).active().orderByTaskId().desc().list();
 
@@ -287,6 +262,7 @@ public class DynamicFormController {
             tasks.addAll(dispatchTasks);
             tasks.addAll(leaveJpaTasks);
         } else {
+            //获取获选人待办任务列表
             tasks = taskService.createTaskQuery().taskCandidateOrAssigned(user.getId()).active().orderByTaskId().desc().list();
         }
 
@@ -308,7 +284,7 @@ public class DynamicFormController {
     }
 
     /**
-     * 运行中的流程实例
+     * 运行中的流程实例  只有权限查看自己的，如果是管理员，查看全部的运行流程实例
      *
      * @param model
      * @return
@@ -324,7 +300,6 @@ public class DynamicFormController {
             ProcessInstanceQuery leaveDynamicQuery = runtimeService.createProcessInstanceQuery()
                     .processDefinitionKey("leave-dynamic-from").orderByProcessInstanceId().desc().active();
             List<ProcessInstance> list = leaveDynamicQuery.listPage(pageParams[0], pageParams[1]);
-
             ProcessInstanceQuery dispatchQuery = runtimeService.createProcessInstanceQuery()
                     .processDefinitionKey("dispatch").active().orderByProcessInstanceId().desc();
             List<ProcessInstance> list2 = dispatchQuery.listPage(pageParams[0], pageParams[1]);
@@ -385,7 +360,6 @@ public class DynamicFormController {
             page.setResult(list);
             page.setTotalCount(dynamicQuery.count());
         }
-
         mav.addObject("page", page);
         return mav;
     }

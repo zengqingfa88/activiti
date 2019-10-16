@@ -5,7 +5,7 @@
 #topPane {
     overflow: hidden;
     height: 30px;
-    background: url(${ctx }/images/xeasyui/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
+    background: #7f99be repeat-x center 50%;
     color: #fff;
     line-height: 18px;
     font-family: Verdana, 微软雅黑, 黑体;

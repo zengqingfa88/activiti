@@ -134,7 +134,9 @@ public class LeaveWorkflowService {
 
             // 设置当前任务信息
             List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).active().orderByTaskCreateTime().desc().listPage(0, 1);
-            leave.setTask(tasks.get(0));
+            if (tasks != null && tasks.size() > 0) {
+                leave.setTask(tasks.get(0));
+            }
         }
 
         page.setTotalCount(query.count());

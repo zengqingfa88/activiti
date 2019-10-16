@@ -496,7 +496,7 @@
       "properties": {
         "overrideid": "flow5",
         "name": "同意",
-        "conditionsequenceflow": "${deptLeaderPass}"
+        "conditionsequenceflow": "deptLeaderPass"
       }
     },
     {

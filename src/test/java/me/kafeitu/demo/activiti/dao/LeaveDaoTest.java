@@ -58,4 +58,7 @@ public class LeaveDaoTest extends SpringTransactionalTestCase {
 		assertNull(leave);
 	}
 
+
+
+
 }

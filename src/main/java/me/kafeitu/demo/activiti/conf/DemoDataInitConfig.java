@@ -55,7 +55,7 @@ public class DemoDataInitConfig {
     @Autowired
     protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
-    @PostConstruct
+    
     public void init() {
 
         try {

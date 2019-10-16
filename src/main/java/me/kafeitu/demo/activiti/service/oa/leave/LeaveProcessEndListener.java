@@ -1,6 +1,6 @@
 package me.kafeitu.demo.activiti.service.oa.leave;
 
-import me.kafeitu.demo.activiti.dao.ActivitiDao;
+import me.kafeitu.demo.activiti.dao.impl.ActivitiDao;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@
  * 动态Form办理功能
  */
 $(function() {
-
+debugger
 	$('.handle').click(handle);
 
 });

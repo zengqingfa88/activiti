@@ -1,4 +1,4 @@
-package me.kafeitu.demo.activiti.dao;
+package me.kafeitu.demo.activiti.dao.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author: Henry Yan
  */
 @Component
-public class ActivitiDao {
+public class ActivitiDao  {
 
     @PersistenceContext
     private EntityManager entityManager;

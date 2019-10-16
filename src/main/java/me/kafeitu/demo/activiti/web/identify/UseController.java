@@ -1,5 +1,8 @@
 package me.kafeitu.demo.activiti.web.identify;
 
+import me.kafeitu.demo.activiti.factory.CustomGroupEntityManager;
+import me.kafeitu.demo.activiti.user.entity.SysRole;
+import me.kafeitu.demo.activiti.user.mapper.RoleRepository;
 import me.kafeitu.demo.activiti.util.UserUtil;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -29,6 +32,9 @@ public class UseController {
     // Activiti Identify Service  关于人员信息
     private IdentityService identityService;
 
+    @Autowired
+    private CustomGroupEntityManager customGroupEntityManager;
+
     /**
      * 登录系统
      *
@@ -47,7 +53,8 @@ public class UseController {
             User user = identityService.createUserQuery().userId(userName).singleResult();
             UserUtil.saveUserToSession(session, user);
 
-            List<Group> groupList = identityService.createGroupQuery().groupMember(userName).list();
+            //  List<Group> groupList = identityService.createGroupQuery().groupMember(userName).list();
+            List<Group> groupList = customGroupEntityManager.findGroupsByUser(userName);
             session.setAttribute("groups", groupList);
 
             String[] groupNames = new String[groupList.size()];
@@ -55,9 +62,7 @@ public class UseController {
                 System.out.println(groupList.get(i).getName());
                 groupNames[i] = groupList.get(i).getName();
             }
-
             session.setAttribute("groupNames", ArrayUtils.toString(groupNames));
-
             return "redirect:/main/index";
         } else {
             return "redirect:/login?error=true";

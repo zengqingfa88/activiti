@@ -31,4 +31,7 @@ public class JpaMappingTest extends SpringTransactionalTestCase {
 		}
 
 	}
+
+
+
 }

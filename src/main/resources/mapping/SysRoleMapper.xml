@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.kafeitu.demo.activiti.user.mapper.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="me.kafeitu.demo.activiti.user.entity.SysRole">
+        <id column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_key" property="roleKey" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="role_scope" property="roleScope" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    role_id, role_name, role_key, status, create_time, update_time, remark, role_scope
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        where role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="me.kafeitu.demo.activiti.user.entity.SysRole">
+    insert into sys_role (role_id, role_name, role_key, 
+      status, create_time, update_time, 
+      remark, role_scope)
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleKey,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{roleScope,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="me.kafeitu.demo.activiti.user.entity.SysRole">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleKey != null">
+                role_key,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="roleScope != null">
+                role_scope,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleKey != null">
+                #{roleKey,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="roleScope != null">
+                #{roleScope,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="me.kafeitu.demo.activiti.user.entity.SysRole">
+        update sys_role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleKey != null">
+                role_key = #{roleKey,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="roleScope != null">
+                role_scope = #{roleScope,jdbcType=CHAR},
+            </if>
+        </set>
+        where role_id = #{roleId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="me.kafeitu.demo.activiti.user.entity.SysRole">
+    update sys_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_key = #{roleKey,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      role_scope = #{roleScope,jdbcType=CHAR}
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+
+    <select id="getGroupsByUserName" resultMap="BaseResultMap" parameterType="java.lang.Long">
+      select
+     r.*
+      from sys_role r
+      left join sys_user_role ur
+      on  r.role_id=ur.user_id
+      where r.user_id =#{userId,jdbcType="BIGINT"}
+    </select>
+
+</mapper>

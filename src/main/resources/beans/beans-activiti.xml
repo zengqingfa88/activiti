@@ -80,6 +80,20 @@
                 </entry>
             </map>
         </property>
+
+        <!-- 自定义SessionFactory配置 -->
+        <property name="customSessionFactories">
+            <list>
+                <bean class="me.kafeitu.demo.activiti.factory.CustomUserEntityManagerFactory">
+                    <property name="customUserEntityManager" ref="customUserEntityManager">
+                    </property>
+                </bean>
+                <bean class="me.kafeitu.demo.activiti.factory.CustomGroupEntityManagerFactory">
+                    <property name="customGroupEntityManager" ref="customGroupEntityManager">
+                    </property>
+                </bean>
+            </list>
+        </property>
     </bean>
 
     <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
@@ -98,5 +112,6 @@
     <!-- 集成REST服务需要的bean -->
     <bean id="restResponseFactory" class="org.activiti.rest.service.api.RestResponseFactory"/>
     <bean id="contentTypeResolver" class="org.activiti.rest.common.application.DefaultContentTypeResolver"/>
+
 
 </beans>
