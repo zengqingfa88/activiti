@@ -2,7 +2,7 @@ package me.kafeitu.demo.activiti.factory;
 
 import org.activiti.engine.impl.interceptor.Session;
 import org.activiti.engine.impl.interceptor.SessionFactory;
-import org.activiti.engine.impl.persistence.entity.GroupEntityManager;
+import org.activiti.engine.impl.persistence.entity.GroupIdentityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class CustomGroupEntityManagerFactory implements SessionFactory {
 
     public Class<?> getSessionType() {
         // 返回原始的GroupManager类型
-        return GroupEntityManager.class;
+        return GroupIdentityManager.class;
     }
 
     public Session openSession() {

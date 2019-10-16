@@ -35,7 +35,7 @@ public class CustomGroupEntityManager extends GroupEntityManager {
 
 
     @Override
-    public List<Group> findGroupsByUser(final String userId) {
+    public List<Group> findGroupsByUser( String userId) {
         if (userId == null)
             return null;
         List<SysRole> sysRoleList = roleRepository.getGroupsByUserName(new Long(userId));
@@ -71,17 +71,17 @@ public class CustomGroupEntityManager extends GroupEntityManager {
 
     @Override
     public long findGroupCountByQueryCriteria(GroupQueryImpl query) {
-        return super.findGroupCountByQueryCriteria(query);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public List<Group> findGroupsByNativeQuery(Map<String, Object> parameterMap, int firstResult, int maxResults) {
-        return super.findGroupsByNativeQuery(parameterMap, firstResult, maxResults);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public long findGroupCountByNativeQuery(Map<String, Object> parameterMap) {
-        return super.findGroupCountByNativeQuery(parameterMap);
+        throw new RuntimeException("not implement method.");
     }
 
 }

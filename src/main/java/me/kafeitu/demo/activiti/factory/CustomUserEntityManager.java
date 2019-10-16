@@ -32,13 +32,11 @@ import java.util.Map;
 @Component
 public class CustomUserEntityManager extends UserEntityManager {
 
-
     @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private UserRepository userRepository;
-
 
     @Override
     public List<User> findUserByQueryCriteria(UserQueryImpl query, Page page) {
@@ -48,9 +46,8 @@ public class CustomUserEntityManager extends UserEntityManager {
         return list;
     }
 
-
     @Override
-    public UserEntity findUserById(final String userId) {
+    public UserEntity findUserById( String userId) {
         if (StringUtils.isBlank(userId)) {
             return null;
         }
@@ -77,37 +74,35 @@ public class CustomUserEntityManager extends UserEntityManager {
     }
 
 
-
-
     @Override
     public long findUserCountByQueryCriteria(UserQueryImpl query) {
-        return super.findUserCountByQueryCriteria(query);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {
-        return super.findUserInfoByUserIdAndKey(userId, key);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public List<String> findUserInfoKeysByUserIdAndType(String userId, String type) {
-        return super.findUserInfoKeysByUserIdAndType(userId, type);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public List<org.activiti.engine.identity.User> findPotentialStarterUsers(String proceDefId) {
-        return super.findPotentialStarterUsers(proceDefId);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public List<org.activiti.engine.identity.User> findUsersByNativeQuery(Map<String, Object> parameterMap,
                                                                           int firstResult, int maxResults) {
-        return super.findUsersByNativeQuery(parameterMap, firstResult, maxResults);
+        throw new RuntimeException("not implement method.");
     }
 
     @Override
     public long findUserCountByNativeQuery(Map<String, Object> parameterMap) {
-        return super.findUserCountByNativeQuery(parameterMap);
+        throw new RuntimeException("not implement method.");
     }
 
     //校验密码

@@ -53,8 +53,8 @@ public class UseController {
             User user = identityService.createUserQuery().userId(userName).singleResult();
             UserUtil.saveUserToSession(session, user);
 
-            //  List<Group> groupList = identityService.createGroupQuery().groupMember(userName).list();
-            List<Group> groupList = customGroupEntityManager.findGroupsByUser(userName);
+           //  List<Group> groupList = identityService.createGroupQuery().groupMember(userName).list();
+           List<Group> groupList = customGroupEntityManager.findGroupsByUser(userName);
             session.setAttribute("groups", groupList);
 
             String[] groupNames = new String[groupList.size()];
