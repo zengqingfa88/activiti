@@ -62,6 +62,7 @@
         <property name="customFormTypes">
             <list>
                 <bean class="me.kafeitu.demo.activiti.activiti.form.UsersFormType"/>
+                <bean class="me.kafeitu.demo.activiti.activiti.form.DoubleFormType"></bean>
             </list>
         </property>
 
@@ -112,6 +113,5 @@
     <!-- 集成REST服务需要的bean -->
     <bean id="restResponseFactory" class="org.activiti.rest.service.api.RestResponseFactory"/>
     <bean id="contentTypeResolver" class="org.activiti.rest.common.application.DefaultContentTypeResolver"/>
-
 
 </beans>

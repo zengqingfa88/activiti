@@ -79,9 +79,9 @@ public class FormKeyController {
         ModelAndView mav = new ModelAndView("/form/formkey/formkey-process-list");
         Page<ProcessDefinition> page = new Page<ProcessDefinition>(PageUtil.PAGE_SIZE);
         int[] pageParams = PageUtil.init(page, request);
-    /*
-     * 只读取动态表单：leave-formkey
-     */
+        /*
+         * 只读取外置表单：leave-formkey，如果放在一起，是全部的表单，不进行区分，读取了外置表单增加过滤条件：leave-formkey
+         */
         ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().processDefinitionKey("leave-formkey").active().orderByDeploymentId().desc();
         List<ProcessDefinition> list = query.listPage(pageParams[0], pageParams[1]);
 
@@ -94,13 +94,11 @@ public class FormKeyController {
     /**
      * 初始化启动流程，读取启动流程的表单内容来渲染start form
      */
-    @RequestMapping(value = "get-form/start/{processDefinitionId}")
+    @RequestMapping(value = "get-form/start/{processDefinitionId}", produces = "application/html;charset=UTF-8")
     @ResponseBody
     public Object findStartForm(@PathVariable("processDefinitionId") String processDefinitionId) throws Exception {
-
         // 根据流程定义ID读取外置表单
         Object startForm = formService.getRenderedStartForm(processDefinitionId);
-
         return startForm;
     }
 
@@ -128,9 +126,9 @@ public class FormKeyController {
         for (Entry<String, String[]> entry : entrySet) {
             String key = entry.getKey();
 
-      /*
-       * 参数结构：fq_reason，用_分割 fp的意思是form paremeter 最后一个是属性名称
-       */
+            /*
+             * 参数结构：fq_reason，用_分割 fp的意思是form paremeter 最后一个是属性名称
+             */
             if (StringUtils.defaultString(key).startsWith("fp_")) {
                 String[] paramSplit = key.split("_");
                 formProperties.put(paramSplit[1], entry.getValue()[0]);

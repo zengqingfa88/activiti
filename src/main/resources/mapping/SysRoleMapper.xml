@@ -132,7 +132,7 @@
       from sys_role r
       left join sys_user_role ur
       on  r.role_id=ur.user_id
-      where r.user_id =#{userId,jdbcType="BIGINT"}
+      where r.user_id =#{userId,jdbcType=BIGINT}
     </select>
 
 </mapper>

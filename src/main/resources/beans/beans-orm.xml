@@ -30,7 +30,7 @@
         <property name="packagesToScan" value="me.kafeitu.demo.activiti"/>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
@@ -50,7 +50,6 @@
 
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
-
 
 
 </beans>

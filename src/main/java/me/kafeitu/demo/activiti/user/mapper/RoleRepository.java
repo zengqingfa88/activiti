@@ -17,9 +17,10 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository<SysRole, Long> {
 
-    @Query(value = "select   r.*  from  sys_user_role ur    right join sys_role r  on  r.role_id=ur.role_id   where ur.user_id =?1",nativeQuery = true)
+    @Query(value = "select   r.*  from  sys_user_role ur    right join sys_role r  on  r.role_id=ur.role_id   where ur.user_id =?1", nativeQuery = true)
     List<SysRole> getGroupsByUserName(Long userId);
 
-    @Query(value = "select * from sys_role",nativeQuery = true)
+    @Query(value = "select * from sys_role", nativeQuery = true)
     List<SysRole> getGroupsByUserName2();
+
 }

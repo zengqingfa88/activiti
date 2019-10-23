@@ -2,8 +2,12 @@ package me.kafeitu.demo.activiti.service.oa.leave;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.ZipInputStream;
 
 import me.kafeitu.demo.activiti.entity.oa.Leave;
 import me.kafeitu.demo.activiti.factory.CustomGroupEntityManager;
@@ -12,8 +16,10 @@ import me.kafeitu.demo.activiti.user.entity.SysRole;
 import me.kafeitu.demo.activiti.user.mapper.RoleRepository;
 import me.kafeitu.modules.test.spring.SpringTransactionalTestCase;
 
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
+import org.activiti.engine.repository.Deployment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +51,9 @@ public class LeaveManagerTest extends SpringTransactionalTestCase {
 	@Autowired
 	CustomGroupEntityManager customGroupEntityManager;
 
+	@Autowired
+	private RepositoryService repositoryService;
+
 	@Test
 	public void testUser() {
 		List<Group> groupsByUser = customUserEntityManager.findGroupsByUser("1");
@@ -75,6 +84,17 @@ public class LeaveManagerTest extends SpringTransactionalTestCase {
 		
 		Leave newLeave = leaveManager.getLeave(leave.getId());
 		assertNotNull(newLeave);
+	}
+
+
+	@Test
+	public void testDeploy() throws FileNotFoundException {
+		// 获取本地文件
+		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(new File("L:\\idea_workspace\\project02\\kft-activiti-demo-master\\src\\main\\resources\\diagrams\\leave-formkey\\leave-formkey.zip"))); // 填写你的zip压缩包绝对路径
+// 进行部署
+		Deployment deployment = repositoryService.createDeployment().addZipInputStream(zipInputStream).deploy();
+		System.out.println(" - deployment: " + deployment);
+
 	}
 
 }
