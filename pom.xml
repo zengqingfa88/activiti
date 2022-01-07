@@ -35,7 +35,7 @@
         <slf4j.version>1.7.5</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <jetty.version>8.1.15.v20140411</jetty.version>
-        <h2.version>1.4.180</h2.version>
+        <h2.version>2.0.206</h2.version>
         <junit.version>4.10</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <powermock.version>1.4.12</powermock.version>
@@ -566,7 +566,7 @@
                 <!-- driver -->
                 <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
                 <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
-                <jdbc.driver.version>1.4.190</jdbc.driver.version>
+                <jdbc.driver.version>2.0.206</jdbc.driver.version>
 
                 <!-- driver configs -->
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
